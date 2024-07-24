@@ -2,6 +2,12 @@
 #include "Eval.h"
 #include "LTLTree.h"
 
+/*
+    FUTURE PLANS:
+    1. add more operands (including actual LTL)
+    2. attempt to construct automata from the formulas
+
+*/
 int main()
 {
     shared_ptr<Atom> a = make_shared<Atom>("a");
