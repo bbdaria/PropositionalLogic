@@ -28,7 +28,7 @@ class UndefinedSymbol : public exception
 
 class Eval
 {
-    map<Atom, int> m_eval;
+    map<string, int> m_eval;
 
 public:
     Eval(const vector<Atom> AP, const vector<int> values)
@@ -40,9 +40,9 @@ public:
             {
                 throw InvalidAP();
             }
-            if (values.size() < k)
+            if (values.size() > k)
             {
-                if (values[k] != 0 || values[k] != 1)
+                if (values[k] != 0 && values[k] != 1)
                 {
                     throw InvalidAssignment();
                 }
@@ -56,14 +56,28 @@ public:
         }
     }
 
-    map<Atom, int> getEval() const
+    map<string, int> getEval() const
     {
         return m_eval;
     }
 
-    int evalFormula(const LTLFormula &f) const
+    int evalAtom(string atom) const
     {
-        string formula = f.toString();
-        // idea: we will parse using a tree and then use the map to give values.
+        try
+        {
+            return m_eval.at(atom);
+        }
+        catch (...)
+        {
+            throw UndefinedSymbol();
+        }
+    }
+
+    void printEval()
+    {
+        for (auto it : m_eval)
+        {
+            cout << it.first << " " << it.second << endl;
+        }
     }
 };
